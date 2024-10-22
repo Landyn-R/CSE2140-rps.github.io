@@ -1,1 +1,149 @@
+<!DOCTYPE html>
 
+<html>
+    <head>
+        <link rel="stylesheet" href="style.css">
+        <script>
+            var playerChoice = 0;
+
+            var compChoice = 0;
+
+            var results = [0, 0, 0]; //0 = wins, 1 = losses, 2 = ties
+
+            function getRndInteger(min, max) { //gets the random number for the computer choice
+                return Math.floor(Math.random() * (max - min + 1) ) + min;
+            }
+
+            function compTurn() { //randomly generates a number between 1 and 3
+                compChoice = getRndInteger(1, 3); // 1 = rock, 2 = paper, 3 = scissors
+            }
+            
+            function playerTurn(choice) { //gets activated when the player presses a button
+                if (choice === "rock") {
+                    playerChoice = "rock";
+                } else {
+                    if (choice === "paper") {
+                        playerChoice = "paper";
+                    } else {
+                        playerChoice = "scissors";
+                    }
+                }
+            console.log(playerChoice); //logs the choice for debugging
+            document.getElementById("choice").innerHTML = "You chose " + playerChoice;
+            }
+
+            function playRound() { //simulates the turn
+                compTurn();
+
+                if(playerChoice === "rock") { //player choice is rock
+                    switch(compChoice) {
+                        case 1:
+                            console.log("tie");
+                            document.getElementById("comp.choice").innerHTML = "The computer chose rock";
+                            document.getElementById("result").innerHTML = "You tied";
+                            results[2] ++;
+                            break;
+                        case 2:
+                            console.log("loss");
+                            document.getElementById("comp.choice").innerHTML = "The computer chose paper";
+                            document.getElementById("result").innerHTML = "You lost";
+                            results[1] ++;
+                            break;
+                        case 3:
+                            console.log("win");
+                            document.getElementById("comp.choice").innerHTML = "The computer chose scissors";
+                            document.getElementById("result").innerHTML = "You won";
+                            results[0] ++;
+                            break;
+                        default:
+                            console.log('error');
+                            break;
+                    }
+                } else {
+                    if(playerChoice === "paper") { //playee choice is paper
+                        switch(compChoice) {
+                            case 1:
+                                console.log("win");
+                                document.getElementById("comp.choice").innerHTML = "The computer chose rock";
+                                document.getElementById("result").innerHTML = "You won";
+                                results[0] ++;
+                                break;
+                            case 2:
+                                console.log("tie");
+                                document.getElementById("comp.choice").innerHTML = "The computer chose paper";
+                                document.getElementById("result").innerHTML = "You tied";
+                                results[2] ++;
+                                break;
+                            case 3:
+                                console.log("loss");
+                                document.getElementById("comp.choice").innerHTML = "The computer chose scissors";
+                                document.getElementById("result").innerHTML = "You lost";
+                                results[1] ++;
+                                break;
+                            default:
+                                console.log('error');
+                                break;
+                        }
+                    }   else {
+                            if (playerChoice === "scissors") { //player choice is scissors
+                                switch(compChoice) { 
+                                case 1:
+                                        console.log("loss");
+                                        document.getElementById("comp.choice").innerHTML = "The computer chose rock";
+                                        document.getElementById("result").innerHTML = "You lost";
+                                        results[1] ++;
+                                        break;
+                                    case 2:
+                                        console.log("win");
+                                        document.getElementById("comp.choice").innerHTML = "The computer chose paper";
+                                        document.getElementById("result").innerHTML = "You won";
+                                        results[0] ++;
+                                        break;
+                                    case 3:
+                                        console.log("tie");
+                                        document.getElementById("comp.choice").innerHTML = "The computer chose scissors";
+                                        document.getElementById("result").innerHTML = "You tied";
+                                        results[2] ++;
+                                        break;
+                                    default:
+                                        console.log('error');
+                                        break;
+                                }
+                            }   else {
+                                    console.log("nothing chosen");
+                                    document.getElementById("result").innerHTML = "Please select an option";
+                                }
+                        }
+                    }
+            console.log(results);
+            document.getElementById("Wins").innerHTML = results[0];
+            document.getElementById("Losses").innerHTML = results[1];
+            document.getElementById("Ties").innerHTML = results[2];
+            }
+        </script>
+    </head>
+
+    <body>
+        <h2>Rock, Paper, Scissors against a computer</h2>
+        <button onclick="playerTurn('rock')">rock</button> <button onclick="playerTurn('paper')">paper</button> <button onclick="playerTurn('scissors')">scissors</button> 
+
+        <p><button onclick="playRound()">play!</button></p>
+
+        <p id="choice"> </p>
+        <p id="comp.choice"> </p>
+        <p id="result"> </p>
+
+        <table id="results">
+            <tr>
+                <th>Wins</th>
+                <th>Losses</th>
+                <th>Ties</th>
+            </tr>
+            <tr>
+                <td id="Wins">0</td>
+                <td id="Losses">0</td>
+                <td id="Ties">0</td>
+            </tr>
+        </table>
+    </body>
+</html>
